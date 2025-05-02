@@ -1,20 +1,38 @@
 # 📚 Nome do Projeto
 
-> *Substitua este título pelo nome do seu projeto.*
+AutoDex
 
 ## 🧾 Descrição
 
-Descreva aqui de forma clara e objetiva o **propósito da aplicação**.  
-Explique o **enredo ou contexto** onde essa API se aplica. Por exemplo:
+A API do AutoDex se aplica em um contexto onde o objetivo é disponibilizar de forma estruturada, acessível e interativa informações técnicas e históricas sobre veículos automotivos. O site funciona como um catálogo digital inspirado no conceito de uma Pokédex — só que ao invés de Pokémon, ele lista carros.
 
-> "Esta API simula o controle de estoque e pedidos de um pequeno supermercado local. Permite cadastrar produtos, fornecedores e registrar pedidos de compra."
+Essa API seria utilizada por desenvolvedores front-end para consumir os dados dos veículos e montar páginas dinâmicas com:
 
----
+Nome, marca e ano do carro;
+
+Especificações técnicas (motor, potência, consumo, etc.);
+
+Imagens do modelo;
+
+Comparações entre modelos.
+
+Além disso, a API permitiria buscas com filtros (ex: tipo do carro, ano, consumo), simulações de comparação entre dois veículos e até rankings de popularidade baseados no uso ou nas avaliações da comunidade.
+
+Contextos de uso possíveis:
+
+Usuário pesquisando um carro antes de comprar;
+
+Curioso querendo conhecer os modelos clássicos;
+
+Desenvolvedor criando um app ou dashboard com dados da frota;
+
+Loja ou site de carros integrando a base para exibir modelos com dados completos.
+
 
 ## 👥 Integrantes da Dupla
 
-- Nome Completo do Aluno 1 - [usuario Github](https://github.com/seu-usuario)
-- Nome Completo do Aluno 2 - [usuario Github](https://github.com/seu-usuario)
+- Carlos Eduardo Mendes Miranda - [KaduMM04](https://github.com/KaduMM04)
+- Joaquin Beine de Lima - [JoaquinLima26](https://github.com/JoaquinLima26)
 
 ---
 
