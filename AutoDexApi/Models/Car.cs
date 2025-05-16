@@ -1,7 +1,7 @@
 
 namespace AutoDexApi.Models
 {
-    public class Car
+    public class Car : Vehicle
     {
         public int Id { get; set; }
         public string Doors { get; set; }
