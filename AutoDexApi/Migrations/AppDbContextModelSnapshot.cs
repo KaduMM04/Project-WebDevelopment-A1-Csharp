@@ -61,6 +61,49 @@ namespace AutoDexApi.Migrations
                     b.ToTable("Cars");
                 });
 
+            modelBuilder.Entity("AutoDexApi.Models.Motorcycle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("BrakeType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("EngineDisplacement")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Infosid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Mark")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TypeHandlebar")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("YearManufacture")
+                        .HasColumnType("int");
+
+                    b.Property<string>("type")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Infosid");
+
+                    b.ToTable("Motorcycles");
+                });
+
             modelBuilder.Entity("AutoDexApi.Models.VehicleInfo", b =>
                 {
                     b.Property<int>("id")
@@ -92,6 +135,17 @@ namespace AutoDexApi.Migrations
                 });
 
             modelBuilder.Entity("AutoDexApi.Models.Car", b =>
+                {
+                    b.HasOne("AutoDexApi.Models.VehicleInfo", "Infos")
+                        .WithMany()
+                        .HasForeignKey("Infosid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Infos");
+                });
+
+            modelBuilder.Entity("AutoDexApi.Models.Motorcycle", b =>
                 {
                     b.HasOne("AutoDexApi.Models.VehicleInfo", "Infos")
                         .WithMany()

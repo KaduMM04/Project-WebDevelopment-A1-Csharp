@@ -75,3 +75,9 @@ C:\_wp\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net9.0\refint\AutoD
 C:\_wp\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net9.0\AutoDexApi.pdb
 C:\_wp\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net9.0\AutoDexApi.genruntimeconfig.cache
 C:\_wp\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net9.0\ref\AutoDexApi.dll
+C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net9.0\AutoDexApi.MvcApplicationPartsAssemblyInfo.cs
+C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
