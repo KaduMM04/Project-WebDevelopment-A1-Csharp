@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoDexApi.DB;
 using AutoDexApi.Models;
+using AutoDexApi.Dtos;
 
 namespace AutoDexApi.Controllers
 {
@@ -17,12 +18,24 @@ namespace AutoDexApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCar(Car car)
+        public async Task<IActionResult> AddCar(CarCreateDto carDto)
         {
-            if (car == null)
+            if (carDto == null)
             {
                 return BadRequest("invalid data");
             }
+
+            var car = new Car()
+            {
+                Name = carDto.Name,
+                Mark = carDto.Mark,
+                YearManufacture = carDto.YearManufacture,
+                Type = carDto.Type,
+                ImageUrl = carDto.ImageUrl,
+                Doors = carDto.Doors,
+                Traction = carDto.Traction,
+                TypeSteering = carDto.TypeSteering
+            };
 
             _appDbContext.Cars.Add(car);
             await _appDbContext.SaveChangesAsync();
