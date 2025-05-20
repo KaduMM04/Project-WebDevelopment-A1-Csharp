@@ -2,6 +2,7 @@
 using AutoDexApi.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AutoDexApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250519235245_FixCarIOP")]
+    partial class FixCarIOP
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,6 +64,40 @@ namespace AutoDexApi.Migrations
                     b.UseTptMappingStrategy();
                 });
 
+            modelBuilder.Entity("AutoDexApi.Models.VehicleInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<double>("Acceleration")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Engine")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FuelType")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("MaximumSpeed")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Power")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Transmission")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("VehicleInfos");
+                });
+
             modelBuilder.Entity("AutoDexApi.Models.Car", b =>
                 {
                     b.HasBaseType("AutoDexApi.Models.Vehicle");
@@ -101,6 +138,17 @@ namespace AutoDexApi.Migrations
                             t.Property("Id")
                                 .HasColumnName("MotorcycleId");
                         });
+                });
+
+            modelBuilder.Entity("AutoDexApi.Models.VehicleInfo", b =>
+                {
+                    b.HasOne("AutoDexApi.Models.Vehicle", "Vehicle")
+                        .WithMany()
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("AutoDexApi.Models.Car", b =>

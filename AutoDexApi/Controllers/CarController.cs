@@ -33,9 +33,14 @@ namespace AutoDexApi.Controllers
                 YearManufacture = carDto.YearManufacture,
                 Type = carDto.Type,
                 ImageUrl = carDto.ImageUrl,
+                Engine = carDto.Engine,
+                Power = carDto.Power,
+                MaximumSpeed = carDto.MaximumSpeed,
+                FuelType = carDto.FuelType,
+                Transmission = carDto.Transmission,
                 Doors = carDto.Doors,
                 Traction = carDto.Traction,
-                TypeSteering = carDto.TypeSteering
+               
             };
 
             _appDbContext.Cars.Add(car);
@@ -56,6 +61,7 @@ namespace AutoDexApi.Controllers
         public async Task<ActionResult<Car>> GetCarById(int id)
         {
             var car = await _appDbContext.Cars.FindAsync(id);
+
             if (car == null)
             {
                 return NotFound();
@@ -95,7 +101,7 @@ namespace AutoDexApi.Controllers
 
             await _appDbContext.SaveChangesAsync();
 
-            return StatusCode(201, car);
+            return NoContent(); 
         }
 
 

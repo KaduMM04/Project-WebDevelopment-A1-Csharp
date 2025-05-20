@@ -1,16 +1,9 @@
 
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.AccessControl;
-using Microsoft.EntityFrameworkCore.Query;
 
-namespace AutoDexApi.Models
+namespace AutoDexApi.Dtos
 {
-    public abstract class Vehicle
+    public class CarCreateDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
         public string? Name { get; set; }
         public string? Mark { get; set; }
         public int YearManufacture { get; set; }
@@ -23,6 +16,8 @@ namespace AutoDexApi.Models
         public string? FuelType { get; set; }
         public string? Transmission { get; set; }
 
- 
+        public string Doors { get; set; }
+        public string Traction { get; set; }
+        
     }
 }

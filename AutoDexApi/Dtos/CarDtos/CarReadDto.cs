@@ -1,18 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-
-namespace AutoDexApi.Dtos
+namespace AutoDexApi.Dtos.CarDtos
 {
-    public class CarCreateDto
+    public class CarReadDto
     {
         public string? Name { get; set; }
         public string? Mark { get; set; }
         public int YearManufacture { get; set; }
         public string? Type { get; set; }
         public string? ImageUrl { get; set; }
-        
+
         public string Doors { get; set; }
         public string Traction { get; set; }
-        public string TypeSteering { get; set; }
-
     }
 }
