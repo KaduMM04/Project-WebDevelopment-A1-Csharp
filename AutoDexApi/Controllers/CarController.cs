@@ -4,6 +4,7 @@ using AutoDexApi.DB;
 using AutoDexApi.Models;
 using AutoDexApi.Dtos;
 using Microsoft.EntityFrameworkCore;
+using AutoDexApi.Dtos.CarDtos;
 
 namespace AutoDexApi.Controllers
 {
@@ -50,15 +51,27 @@ namespace AutoDexApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Car>>> GetAllCars()
+        public async Task<ActionResult<IEnumerable<CarReadDto>>> GetAllCars()
         {
             var cars = await _appDbContext.Cars.ToListAsync();
+            var carDtos = cars.Select(c => new CarReadDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Mark = c.Mark,
+                YearManufacture = c.YearManufacture,
+                Type = c.Type,
+                ImageUrl = c.ImageUrl,
+                Doors = c.Doors,
+                Traction = c.Traction
 
-            return Ok(cars);
+            }).ToList();
+           
+            return Ok(carDtos);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Car>> GetCarById(int id)
+        public async Task<ActionResult<CarReadDto>> GetCarById(int id)
         {
             var car = await _appDbContext.Cars.FindAsync(id);
 
@@ -66,8 +79,19 @@ namespace AutoDexApi.Controllers
             {
                 return NotFound();
             }
-
-            return Ok(car);
+            var carDto = new CarReadDto
+            {
+                Id = car.Id,
+                Name = car.Name,
+                Mark = car.Mark,
+                YearManufacture = car.YearManufacture,
+                Type = car.Type,
+                ImageUrl = car.ImageUrl,
+                Doors = car.Doors,
+                Traction = car.Traction
+            };
+            
+            return Ok(carDto);
         }
 
         [HttpPut("{id}")]
@@ -103,9 +127,5 @@ namespace AutoDexApi.Controllers
 
             return NoContent(); 
         }
-
-
     }
-
-    
 }

@@ -25,6 +25,5 @@ namespace AutoDexApi.DB
                     tableBuilder.Property(v => v.Id).HasColumnName("MotorcycleId"));
 
         }
-        
     }
 }
