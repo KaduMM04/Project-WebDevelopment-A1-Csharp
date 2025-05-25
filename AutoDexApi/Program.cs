@@ -3,7 +3,15 @@ using AutoDexApi.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 1) Primeiro, configure os serviços
+builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
 
 
 var connectionString = builder.Configuration.GetConnectionString("AppDbConnectionString");
@@ -23,9 +31,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseAuthorization();
 
 app.UseStaticFiles();
+
+app.UseCors("AllowReactApp");
 
 app.MapControllers();
 

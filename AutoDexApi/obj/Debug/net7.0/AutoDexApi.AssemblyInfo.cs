@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AutoDexApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b189305cd16b353bddf39c318246019d11101ed1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+21793c0585b8c7f3870a62b811ebbe0ba40b60a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("AutoDexApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AutoDexApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

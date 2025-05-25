@@ -45,4 +45,3 @@ C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debu
 C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net7.0\AutoDexApi.pdb
 C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net7.0\AutoDexApi.genruntimeconfig.cache
 C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\obj\Debug\net7.0\ref\AutoDexApi.dll
-C:\temp\ws-WebDevelopmentA1\Project-WebDevelopment-A1-Csharp\AutoDexApi\bin\Debug\net7.0\AutoMapper.dll
