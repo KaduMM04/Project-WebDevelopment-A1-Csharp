@@ -1,42 +1,79 @@
-// src/pages/Home.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import CarCard from "../components/vehicleCard/carCard/CarCard";
+// import MotorcycleCard from "../components/MotorcycleCard"; // futuro
+
 import "./Home.css";
 
 export default function Home() {
   const [id, setId] = useState("");
+  const [type, setType] = useState("Cars"); // tipo do veículo selecionado
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
 
   const apiBase = "http://localhost:5125";
 
+  useEffect(() => {
+    setResult(null);
+    setError("");
+    setId(""); // opcional: remove o valor do input
+  }, [type]);
+
   const handleSearch = async () => {
     setError("");
     setResult(null);
 
-    if (!id.trim()) {
-      setError("Please enter an ID.");
-      return;
-    }
-
     try {
-      // tenta Cars
-      let res = await fetch(`${apiBase}/Cars/${id}`);
-      if (res.ok) {
-        const car = await res.json();
-        setResult({ type: "Car", data: car });
+      // Se nenhum ID, buscar todos do tipo selecionado
+      if (!id.trim()) {
+        const res = await fetch(`${apiBase}/${type}`);
+        if (!res.ok) {
+          throw new Error(`Failed to fetch all ${type}`);
+        }
+        const data = await res.json();
+        setResult({ type: "All", data });
         return;
       }
-      // tenta Motorcycles
-      res = await fetch(`${apiBase}/Motorcycles/${id}`);
+
+      // Buscar pelo ID
+      const res = await fetch(`${apiBase}/${type}/${id}`);
       if (res.ok) {
-        const moto = await res.json();
-        setResult({ type: "Motorcycle", data: moto });
-        return;
+        const data = await res.json();
+        setResult({ type: type.slice(0, -1), data }); // remove o "s"
+      } else {
+        setError(`No ${type.slice(0, -1)} found with that ID.`);
       }
-      setError("No Car or Motorcycle found with that ID.");
     } catch (e) {
       console.error(e);
       setError("Network error.");
+    }
+  };
+
+  const handleEdit = (vehicle) => {
+    console.log("Edit", vehicle);
+    // Pode abrir um modal futuramente
+  };
+
+  const handleDelete = async (vehicleId) => {
+    if (!result) return;
+
+    const endpoint =
+      result.type === "Car"
+        ? `${apiBase}/Cars/${vehicleId}`
+        : `${apiBase}/Motorcycles/${vehicleId}`;
+
+    try {
+      const res = await fetch(endpoint, { method: "DELETE" });
+
+      if (res.ok) {
+        alert(`${result.type} deleted successfully.`);
+        setResult(null);
+        setId("");
+      } else {
+        alert(`Failed to delete ${result.type}.`);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Network error while deleting.");
     }
   };
 
@@ -45,6 +82,10 @@ export default function Home() {
       <h1>Auto Dex</h1>
 
       <div className="search-bar">
+        <select className="option" value={type} onChange={(e) => setType(e.target.value)}>
+          <option value="Cars">Cars</option>
+          <option value="Motorcycles">Motorcycles</option>
+        </select>
         <input
           type="text"
           placeholder="Enter vehicle ID"
@@ -58,8 +99,48 @@ export default function Home() {
 
       {result && (
         <div className="result">
-          <h2>Found a {result.type}:</h2>
-          <pre>{JSON.stringify(result.data, null, 2)}</pre>
+          {result.type === "Car" && (
+            <div className="vehicles-list">
+              <CarCard
+                car={result.data}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </div>
+          )}
+
+          {result.type === "Motorcycle" && (
+            <p>
+              Aqui entraria o <code>MotorcycleCard</code> no futuro.
+            </p>
+            // <MotorcycleCard
+            //   motorcycle={result.data}
+            //   onEdit={handleEdit}
+            //   onDelete={handleDelete}
+            // />
+          )}
+
+          {result.type === "All" && (
+            <div className="vehicles-list">
+              {type === "Cars" &&
+                result.data.map((car) => (
+                  <CarCard
+                    key={car.id}
+                    car={car}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                  />
+                ))}
+
+              {type === "Motorcycles" &&
+                result.data.map((moto) => (
+                  <div key={moto.id} className="motorcycle-card">
+                    <p><strong>{moto.name}</strong> - {moto.mark}</p>
+                    {/* Substituir futuramente por <MotorcycleCard ... /> */}
+                  </div>
+                ))}
+            </div>
+          )}
         </div>
       )}
     </div>
