@@ -1,6 +1,6 @@
 .car-card {
-  background-color: white;
-  box-shadow: 0 4px 6px #531cb9;
+  background-color: rgb(197, 197, 197);
+  box-shadow: 8px 4px 6px #531cb9;
   border-radius: 1rem;
   padding: 1rem;
   margin: 0.5rem;
@@ -42,11 +42,11 @@
 }
 
 .car-btn.edit {
-  background-color: #3b82f6;
+  background-color: #531cb9;
 }
 
 .car-btn.edit:hover {
-  background-color: #2563eb;
+  background-color: #531cb9;
 }
 
 .car-btn.delete {

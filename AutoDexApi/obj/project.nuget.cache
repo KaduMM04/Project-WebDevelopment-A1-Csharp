@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZR6rSjf0U0s=",
+  "dgSpecHash": "BRsZb9ap4WQ=",
   "success": true,
-  "projectFilePath": "C:\\temp\\ws-WebDevelopmentA1\\Project-WebDevelopment-A1-Csharp\\AutoDexApi\\AutoDexApi.csproj",
+  "projectFilePath": "C:\\temp\\ws-WebDevelopmentA1\\Project-WebDevelopment-A1-Csharp\\autodexapi\\AutoDexApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.0\\microsoft.aspnetcore.openapi.7.0.0.nupkg.sha512",

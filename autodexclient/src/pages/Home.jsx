@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import CarCard from "../components/vehicleCard/carCard/CarCard";
-// import MotorcycleCard from "../components/MotorcycleCard"; // futuro
-
+import CarModal from "../components/vehicleModal/carModal/CarModal";
 import "./Home.css";
 
 export default function Home() {
   const [id, setId] = useState("");
-  const [type, setType] = useState("Cars"); // tipo do veículo selecionado
+  const [type, setType] = useState("Cars");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+
+  const [isCarModalOpen, setIsCarModalOpen] = useState(false);
+  const [carToEdit, setCarToEdit] = useState(null);
 
   const apiBase = "http://localhost:5125";
 
   useEffect(() => {
     setResult(null);
     setError("");
-    setId(""); // opcional: remove o valor do input
+    setId("");
   }, [type]);
 
   const handleSearch = async () => {
@@ -23,22 +25,18 @@ export default function Home() {
     setResult(null);
 
     try {
-      // Se nenhum ID, buscar todos do tipo selecionado
       if (!id.trim()) {
         const res = await fetch(`${apiBase}/${type}`);
-        if (!res.ok) {
-          throw new Error(`Failed to fetch all ${type}`);
-        }
+        if (!res.ok) throw new Error(`Failed to fetch all ${type}`);
         const data = await res.json();
         setResult({ type: "All", data });
         return;
       }
 
-      // Buscar pelo ID
       const res = await fetch(`${apiBase}/${type}/${id}`);
       if (res.ok) {
         const data = await res.json();
-        setResult({ type: type.slice(0, -1), data }); // remove o "s"
+        setResult({ type: type.slice(0, -1), data });
       } else {
         setError(`No ${type.slice(0, -1)} found with that ID.`);
       }
@@ -49,40 +47,105 @@ export default function Home() {
   };
 
   const handleEdit = (vehicle) => {
-    console.log("Edit", vehicle);
-    // Pode abrir um modal futuramente
+    if (type === "Cars") {
+      setCarToEdit(vehicle);
+      setIsCarModalOpen(true);
+    }
   };
 
   const handleDelete = async (vehicleId) => {
-    if (!result) return;
+  if (!type) return;
 
-    const endpoint =
-      result.type === "Car"
-        ? `${apiBase}/Cars/${vehicleId}`
-        : `${apiBase}/Motorcycles/${vehicleId}`;
+  try {
+    const res = await fetch(`${apiBase}/${type}/${vehicleId}`, {
+      method: "DELETE",
+    });
 
-    try {
-      const res = await fetch(endpoint, { method: "DELETE" });
-
-      if (res.ok) {
-        alert(`${result.type} deleted successfully.`);
-        setResult(null);
-        setId("");
+    if (res.ok) {
+      // Atualizar estado local (remover veículo da lista exibida)
+      if (result?.type === "All") {
+        setResult((prev) => ({
+          ...prev,
+          data: prev.data.filter((v) => v.id !== vehicleId),
+        }));
       } else {
-        alert(`Failed to delete ${result.type}.`);
+        // Se for um único item, apaga da tela
+        setResult(null);
       }
-    } catch (error) {
-      console.error(error);
-      alert("Network error while deleting.");
+    } else {
+      console.error("Failed to delete.");
     }
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
+  const handleCarSubmit = async (car) => {
+  const isEditing = !!car.id;
+  const endpoint = isEditing ? `${apiBase}/Cars/${car.id}` : `${apiBase}/Cars`;
+  const method = isEditing ? "PUT" : "POST";
+
+  try {
+    const res = await fetch(endpoint, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(car),
+    });
+
+    if (res.ok) {
+      const savedCar = await res.json(); // resgata carro atualizado/criado do backend
+
+      setResult((prev) => {
+        if (!prev) {
+          return { type: "Car", data: savedCar };
+        }
+
+        if (prev.type === "All") {
+          if (isEditing) {
+            // Atualiza carro existente
+            return {
+              ...prev,
+              data: prev.data.map((c) => (c.id === savedCar.id ? savedCar : c)),
+            };
+          } else {
+            // Adiciona novo carro
+            return {
+              ...prev,
+              data: [...prev.data, savedCar],
+            };
+          }
+        }
+
+        // Se estava vendo um único carro, atualiza esse
+        if (prev.type === "Car") {
+          return { ...prev, data: savedCar };
+        }
+
+        return prev;
+      });
+
+      setIsCarModalOpen(false);
+      setCarToEdit(null);
+    } else {
+      console.error("Failed to save car.");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   return (
     <div className="home-container">
       <h1>Auto Dex</h1>
 
       <div className="search-bar">
-        <select className="option" value={type} onChange={(e) => setType(e.target.value)}>
+        <select
+          className="option"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
           <option value="Cars">Cars</option>
           <option value="Motorcycles">Motorcycles</option>
         </select>
@@ -93,6 +156,9 @@ export default function Home() {
           onChange={(e) => setId(e.target.value)}
         />
         <button onClick={handleSearch}>Search</button>
+        <button className="add-btn" onClick={() => setIsCarModalOpen(true)}>
+          +
+        </button>
       </div>
 
       {error && <p className="error">{error}</p>}
@@ -100,24 +166,17 @@ export default function Home() {
       {result && (
         <div className="result">
           {result.type === "Car" && (
-            <div className="vehicles-list">
-              <CarCard
-                car={result.data}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            </div>
+            <CarCard
+              car={result.data}
+              onEdit={handleEdit}
+              onDelete={() => handleDelete(result.data.id)}
+            />
           )}
 
           {result.type === "Motorcycle" && (
             <p>
               Aqui entraria o <code>MotorcycleCard</code> no futuro.
             </p>
-            // <MotorcycleCard
-            //   motorcycle={result.data}
-            //   onEdit={handleEdit}
-            //   onDelete={handleDelete}
-            // />
           )}
 
           {result.type === "All" && (
@@ -131,17 +190,29 @@ export default function Home() {
                     onDelete={handleDelete}
                   />
                 ))}
-
               {type === "Motorcycles" &&
                 result.data.map((moto) => (
                   <div key={moto.id} className="motorcycle-card">
-                    <p><strong>{moto.name}</strong> - {moto.mark}</p>
-                    {/* Substituir futuramente por <MotorcycleCard ... /> */}
+                    <p>
+                      <strong>{moto.name}</strong> - {moto.mark}
+                    </p>
                   </div>
                 ))}
             </div>
           )}
         </div>
+      )}
+
+      {type === "Cars" && (
+        <CarModal
+          isOpen={isCarModalOpen}
+          onClose={() => {
+            setIsCarModalOpen(false);
+            setCarToEdit(null);
+          }}
+          onSubmit={handleCarSubmit}
+          carToEdit={carToEdit}
+        />
       )}
     </div>
   );
