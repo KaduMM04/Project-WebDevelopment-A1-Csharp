@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CarCard from "../components/vehicleCard/carCard/CarCard";
 import CarModal from "../components/vehicleModal/carModal/CarModal";
+import MotorcycleCard from "../components/vehicleCard/motorcycleCard/MotorcycleCard";
+import MotorcycleModal from "../components/vehicleModal/motorcycleModal/MotorcycleModal";
 import "./Home.css";
 
 export default function Home() {
@@ -11,6 +13,8 @@ export default function Home() {
 
   const [isCarModalOpen, setIsCarModalOpen] = useState(false);
   const [carToEdit, setCarToEdit] = useState(null);
+  const [isMotorcycleModalOpen, setIsMotorcycleModalOpen] = useState(false);
+  const [motorcycleToEdit, setMotorcycleToEdit] = useState(null);
 
   const apiBase = "http://localhost:5125";
 
@@ -50,7 +54,10 @@ export default function Home() {
     if (type === "Cars") {
       setCarToEdit(vehicle);
       setIsCarModalOpen(true);
-    }
+    }else if (type === "Motorcycles") {
+    setMotorcycleToEdit(vehicle);
+    setIsMotorcycleModalOpen(true);
+  }
   };
 
   const handleDelete = async (vehicleId) => {
@@ -136,6 +143,57 @@ export default function Home() {
   }
 };
 
+const handleMotorcycleSubmit = async (moto) => {
+  const isEditing = !!moto.id;
+  const endpoint = isEditing ? `${apiBase}/Motorcycles/${moto.id}` : `${apiBase}/Motorcycles`;
+  const method = isEditing ? "PUT" : "POST";
+
+  try {
+    const res = await fetch(endpoint, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(moto),
+    });
+
+    if (res.ok) {
+      const savedMoto = await res.json();
+
+      setResult((prev) => {
+        if (!prev) {
+          return { type: "Motorcycle", data: savedMoto };
+        }
+
+        if (prev.type === "All") {
+          if (isEditing) {
+            return {
+              ...prev,
+              data: prev.data.map((m) => (m.id === savedMoto.id ? savedMoto : m)),
+            };
+          } else {
+            return {
+              ...prev,
+              data: [...prev.data, savedMoto],
+            };
+          }
+        }
+
+        if (prev.type === "Motorcycle") {
+          return { ...prev, data: savedMoto };
+        }
+
+        return prev;
+      });
+
+      setIsMotorcycleModalOpen(false);
+      setMotorcycleToEdit(null);
+    } else {
+      console.error("Failed to save motorcycle.");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
   return (
     <div className="home-container">
       <h1>Auto Dex</h1>
@@ -156,7 +214,14 @@ export default function Home() {
           onChange={(e) => setId(e.target.value)}
         />
         <button onClick={handleSearch}>Search</button>
-        <button className="add-btn" onClick={() => setIsCarModalOpen(true)}>
+        <button
+          className="add-btn"
+          onClick={() =>
+            type === "Cars"
+              ? setIsCarModalOpen(true)
+              : setIsMotorcycleModalOpen(true)
+          }
+        >
           +
         </button>
       </div>
@@ -174,9 +239,11 @@ export default function Home() {
           )}
 
           {result.type === "Motorcycle" && (
-            <p>
-              Aqui entraria o <code>MotorcycleCard</code> no futuro.
-            </p>
+            <MotorcycleCard
+              motorcycle={result.data}
+              onEdit={handleEdit}
+              onDelete={() => handleDelete(result.data.id)}
+            />
           )}
 
           {result.type === "All" && (
@@ -214,6 +281,19 @@ export default function Home() {
           carToEdit={carToEdit}
         />
       )}
+
+      {type === "Motorcycles" && (
+        <MotorcycleModal
+          isOpen={isMotorcycleModalOpen}
+          onClose={() => {
+            setIsMotorcycleModalOpen(false);
+            setMotorcycleToEdit(null);
+          }}
+          onSubmit={handleMotorcycleSubmit}
+          motorcycleToEdit={motorcycleToEdit}
+          />
+        )}
+
     </div>
   );
 }
