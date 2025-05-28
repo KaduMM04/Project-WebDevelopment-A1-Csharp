@@ -9,7 +9,7 @@ namespace AutoDexApi.Dtos
         public int YearManufacture { get; set; }
         public string? Type { get; set; }
         public string? ImageUrl { get; set; }
-
+        
         public string? Engine { get; set; }
         public int Power { get; set; }
         public int MaximumSpeed { get; set; }
