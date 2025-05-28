@@ -67,6 +67,7 @@ export default function CarModal({ isOpen, onClose, onSubmit, carToEdit}) {
                 value={car[key]}
                 onChange={handleChange}
                 placeholder={typeof value === "number" ? key : ""}
+                readOnly={key === "id"} 
               />
             </div>
           ))}
