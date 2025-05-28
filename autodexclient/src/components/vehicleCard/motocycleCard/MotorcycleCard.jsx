@@ -16,12 +16,12 @@ const MotorcycleCard = ({ motorcycle, onEdit, onDelete }) => {
 
       <h2 className="motorcycle-title">{motorcycle.name}</h2>
       
-      <p className="motorcycle-text"><strong>Marca:</strong> {motorcycle.mark}</p>
-      <p className="motorcycle-text"><strong>Ano:</strong> {motorcycle.yearManufacture}</p>
-      <p className="motorcycle-text"><strong>Tipo:</strong> {motorcycle.type}</p>
-      <p className="motorcycle-text"><strong>Cilindradas:</strong> {motorcycle.engineDisplacement} cc</p>
-      <p className="motorcycle-text"><strong>Tipo de Guidão:</strong> {motorcycle.typeHandlebar}</p>
-      <p className="motorcycle-text"><strong>Tipo de Freio:</strong> {motorcycle.brakeType}</p>
+      <p className="motorcycle-text"><strong>Mark:</strong> {motorcycle.mark}</p>
+      <p className="motorcycle-text"><strong>Year:</strong> {motorcycle.yearManufacture}</p>
+      <p className="motorcycle-text"><strong>Type:</strong> {motorcycle.type}</p>
+      <p className="motorcycle-text"><strong>EngineDisplacement:</strong> {motorcycle.engineDisplacement} cc</p>
+      <p className="motorcycle-text"><strong>TypeHandlebar:</strong> {motorcycle.typeHandlebar}</p>
+      <p className="motorcycle-text"><strong>BrakeType:</strong> {motorcycle.brakeType}</p>
 
       <div className="motorcycle-buttons">
         <button className="motorcycle-btn edit" onClick={() => onEdit(motorcycle)}>Editar</button>

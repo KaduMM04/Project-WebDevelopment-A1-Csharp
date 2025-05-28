@@ -158,34 +158,34 @@ const handleMotorcycleSubmit = async (moto) => {
     if (res.ok) {
       const savedMoto = await res.json();
 
-      setResult((prev) => {
-        if (!prev) {
-          return { type: "Motorcycle", data: savedMoto };
+    setResult((prev) => {
+      if (!prev) { 
+        return { type: "Motorcycle", data: savedMoto };
+      }
+
+      if (prev.type === "All") { 
+        if (isEditing) { 
+          return {
+            ...prev,
+            data: prev.data.map((m) => (m.id === savedMoto.id ? savedMoto : m)),
+          };
+        } else { 
+          return {
+            ...prev,
+            data: [...prev.data, savedMoto], 
+          };
         }
+      }
 
-        if (prev.type === "All") {
-          if (isEditing) {
-            return {
-              ...prev,
-              data: prev.data.map((m) => (m.id === savedMoto.id ? savedMoto : m)),
-            };
-          } else {
-            return {
-              ...prev,
-              data: [...prev.data, savedMoto],
-            };
-          }
-        }
+      if (prev.type === "Motorcycle") { 
+        return { ...prev, data: savedMoto }; 
+      }
 
-        if (prev.type === "Motorcycle") {
-          return { ...prev, data: savedMoto };
-        }
+      return prev;
+    });
 
-        return prev;
-      });
-
-      setIsMotorcycleModalOpen(false);
-      setMotorcycleToEdit(null);
+    setIsMotorcycleModalOpen(false);
+    setMotorcycleToEdit(null);
     } else {
       console.error("Failed to save motorcycle.");
     }
@@ -259,11 +259,12 @@ const handleMotorcycleSubmit = async (moto) => {
                 ))}
               {type === "Motorcycles" &&
                 result.data.map((moto) => (
-                  <div key={moto.id} className="motorcycle-card">
-                    <p>
-                      <strong>{moto.name}</strong> - {moto.mark}
-                    </p>
-                  </div>
+                  <MotorcycleCard
+                    key={moto.id}
+                    motorcycle={moto}
+                    onEdit={handleEdit}
+                    onDelete={() => handleDelete(moto.id)}
+                  />
                 ))}
             </div>
           )}
