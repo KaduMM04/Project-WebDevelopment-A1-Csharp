@@ -16,7 +16,6 @@ export default function MotorcycleModal({ isOpen, onClose, onSubmit, motorcycleT
     engineDisplacement: "",
     typeHandlebar: "",
     brakeType: "",
-    traction: "", 
   });
 
   useEffect(() => {
@@ -27,12 +26,16 @@ export default function MotorcycleModal({ isOpen, onClose, onSubmit, motorcycleT
         name: "",
         mark: "",
         yearManufacture: "",
+        type: "",
+        imageUrl: "",
         engine: "",
         power: "",
         maximumSpeed: "",
         fuelType: "",
         transmission: "",
-        traction: "",
+        engineDisplacement: "",
+        typeHandlebar: "",
+        brakeType: "",
       });
     }
   }, [motorcycleToEdit]);
@@ -46,6 +49,7 @@ export default function MotorcycleModal({ isOpen, onClose, onSubmit, motorcycleT
 
   const handleSubmit = () => {
     onSubmit(motorcycle);
+    onClose();
   };
 
   return (
@@ -54,12 +58,14 @@ export default function MotorcycleModal({ isOpen, onClose, onSubmit, motorcycleT
         <h2>{motorcycleToEdit ? "Edit Motorcycle" : "Add Motorcycle"}</h2>
         {Object.entries(motorcycle).map(([key, value]) => (
           <input
+            id={key}
             key={key}
             type="text"
             name={key}
             placeholder={key}
             value={value}
             onChange={handleChange}
+            readOnly={key === "id"}
           />
         ))}
         <div className="modal-buttons">

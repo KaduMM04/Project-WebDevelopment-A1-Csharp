@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "T33GP/pV8CpLbXwhxHddZP9emfU4b93Qn/ln82f5O1U=",
+  "Hash": "+O0eFI5zpkdi1BilXfsgTll4Q1pnt4akyM/l5f84T9k=",
   "Source": "AutoDexApi",
   "BasePath": "_content/AutoDexApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
