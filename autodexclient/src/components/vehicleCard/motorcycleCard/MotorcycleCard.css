@@ -45,7 +45,7 @@
 }
 
 .motorcycle-btn.edit:hover {
-  background-color: #45159a; 
+  background-color: #7d54c9; 
 }
 
 .motorcycle-btn.delete {
@@ -53,5 +53,5 @@
 }
 
 .motorcycle-btn.delete:hover {
-  background-color: #dc2626;
+  background-color: #d35a5a;
 }
