@@ -6,12 +6,17 @@ export default function MotorcycleModal({ isOpen, onClose, onSubmit, motorcycleT
     name: "",
     mark: "",
     yearManufacture: "",
+    type: "",
+    imageUrl: "",
     engine: "",
     power: "",
     maximumSpeed: "",
     fuelType: "",
     transmission: "",
-    traction: "",
+    engineDisplacement: "",
+    typeHandlebar: "",
+    brakeType: "",
+    traction: "", 
   });
 
   useEffect(() => {
