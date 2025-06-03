@@ -1,0 +1,70 @@
+.home-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.home-container h1 {
+  margin-bottom: 1.5rem;
+  color: #531cb9;
+}
+
+.search-bar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.option {
+  padding: 0.5rem 1rem;
+  background: #531cb9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  padding: 0.5rem 1rem;
+  background: #531cb9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  opacity: 0.9;
+}
+
+.error {
+  color: #c00;
+  margin-top: 1rem;
+}
+
+.result {
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 1rem;
+}
+
+.vehicles-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-items: center;
+}

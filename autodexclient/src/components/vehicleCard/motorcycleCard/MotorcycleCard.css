@@ -1,0 +1,57 @@
+.motorcycle-card {
+  background-color: rgb(197, 197, 197);
+  box-shadow: 8px 4px 6px #531cb9;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.5rem;
+  min-width: 17rem;
+}
+
+.motorcycle-image {
+  width: 100%;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.motorcycle-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.motorcycle-text {
+  color: #4a5568;
+}
+
+.motorcycle-buttons {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.motorcycle-btn {
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.motorcycle-btn.edit {
+  background-color: #531cb9;
+}
+
+.motorcycle-btn.edit:hover {
+  background-color: #7d54c9; 
+}
+
+.motorcycle-btn.delete {
+  background-color: #ef4444;
+}
+
+.motorcycle-btn.delete:hover {
+  background-color: #d35a5a;
+}

@@ -1,0 +1,56 @@
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace AutoDexApi.Migrations
+{
+    /// <inheritdoc />
+    public partial class RemoveVehicleInfo : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "VehicleInfos");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "VehicleInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    VehicleId = table.Column<int>(type: "int", nullable: false),
+                    Acceleration = table.Column<double>(type: "double", nullable: false),
+                    Engine = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FuelType = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MaximumSpeed = table.Column<int>(type: "int", nullable: false),
+                    Power = table.Column<int>(type: "int", nullable: false),
+                    Transmission = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VehicleInfos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VehicleInfos_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VehicleInfos_VehicleId",
+                table: "VehicleInfos",
+                column: "VehicleId");
+        }
+    }
+}
